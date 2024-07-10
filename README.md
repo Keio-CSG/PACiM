@@ -3,6 +3,13 @@ Software Simulation Framework for "PACiM: A Sparsity-Centric Hybrid Compute-in-M
 
 ## 1. Overview
 
+* `./Software_Simulation_Framework`: The software simulation framework base for bit-wise CiM simulation.
+* `./PACiM`: An software implementation of PACiM in the paper.
+
+### Quick Usage
+
+You can use the SimConv2d/SimLinear in './Software_Simulation_Framework/module/module.py' in your own project for bit-wise simulation, and PAConv2d/PALinear in './PACiM/module/pac_module.py' for PAC simulation.
+
 ## 2. Environments
 
 ```
@@ -13,7 +20,11 @@ matplotlib==3.8.0
 easydict==1.13
 ```
 
-## 3. Under Construction
+## 3. Software_Simulation_Framework
+
+```
+python3 script\lisa_cora.py
+```
 
 ## 4. PACiM
 
