@@ -31,13 +31,13 @@ This folder includes all modules required for a basic bit-wise CiM simulation.
 * `./Software_Simulation_Framework/module`: CONV/LINEAR modules for QAT/Noise-aware training/Bit-wise simulation.
 * `./Software_Simulation_Framework/main`: Main directory for model training and simulation.
 
-All you need to do is to modify the parameter settings `config.py` in the main folder.
+All you need to do is to modify the parameter/argument settings `config.py` in the main folder.
 
 Then run `src_train.py` for model training and `src_simulation.py` for model evaluation and bit-wise simulation.
 
 ### 3.2. Module Introduction
 
-The **SimConv2d** and **SimLinear** module have three different operation mode: **Train**, **Inference**, and **Simulation**. You can specify the mode in the class instantiation.
+The **SimConv2d** and **SimLinear** module have three different operation mode: **Train**, **Inference**, and **Simulation**. You can specify the mode in the class arguments.
 
 In **Train** mode, the DNN model is trained with fake UINT quantization with given weight/activation bit. If a noise intensity is given with **trim_noise**, the model will be trained under a scaled Gaussian noise (Noise-aware training).
 
@@ -47,7 +47,7 @@ In **Simulation** mode, the module will conduct bit-wise digital CiM simulation.
 
 ### 3.3. Parameter Introduction
 
-We add some parameters to commonly used PyTorch layers and create simulation layers. Below is an example of SimConv2d:
+We add some arguments to commonly used PyTorch layers and create simulation layers. Below is an example of SimConv2d:
 
 ```
 SimConv2d(in_planes,                       # Same as nn.conv2d
@@ -71,13 +71,13 @@ Approximate computing emerges as a promising approach to enhance the efficiency 
 
 ### 4.2. PACiM Overview
 
-The PACiM implementation is based on the Software_Simulation_Framework. We add more parameters to the **SimConv2d** and **SimLinear**, and construct the **PAConv2d** and **PALinear**.
+The PACiM implementation is based on the Software_Simulation_Framework. We add more arguments to the **SimConv2d** and **SimLinear**, and construct the **PAConv2d** and **PALinear**.
 
 * `./PACiM/mac_noise_experiment`: MAC experiment to evaluate the RMSE of PAC.
 
 ### 4.3. Parameter Introduction
 
-Upon Software_Simulation_Framework, some parameters for PAC computation are added to the layers. Below is an example of PAConv2d:
+Upon Software_Simulation_Framework, some arguments for PAC computation are added to the layers. Below is an example of PAConv2d:
 
 ```
 PAConv2d(in_planes,                         # Same as nn.conv2d
