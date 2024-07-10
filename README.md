@@ -33,10 +33,10 @@ This folder includes all modules required for a basic bit-wise CiM simulation.
 All you need to do is to modify the parameter settings `config.py` in the main folder.
 Then run `src_train.py` for model training and `src_simulation.py` for model evaluation and bit-wise simulation.
 
-```
-python3 ./Software_Simulation_Framework/main/src_train.py
-python3 ./Software_Simulation_Framework/main/src_simulation.py
-```
+The **SimConv2d** and **SimLinear** module have three different operation mode: **Train**, **Inference**, and **Simulation**. You can specify the mode in the class instantiation.
+In **Train** mode, the DNN model is trained with fake UINT quantization with given weight/activation bit. If a noise intensity is given with **trim_noise**, the model will be trained under a scaled Gaussian noise (Noise-aware training).
+In **Inference** mode, the CONV/LINEAR layers compute output activations with UINT scale. We use this mode to roughly inspect the impact of noise to the DNN inference (by **trim_noise**).
+In **Simulation** mode, the module will conduct bit-wise digital CiM simulation. You can modify or overwrite the `_sim_calc()` in the modules to customize and verify your all computing method.
 
 ## 4. PACiM
 
