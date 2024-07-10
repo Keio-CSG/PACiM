@@ -22,7 +22,10 @@ easydict==1.13
 
 ## 3. Software_Simulation_Framework
 
+### Framework Overview
+
 This folder includes all modules required for a basic bit-wise CiM simulation.
+
 * `./Software_Simulation_Framework/bins`: Some useful scripts.
 * `./Software_Simulation_Framework/dataset`: Datasets for CiM benchmarks.
 * `./Software_Simulation_Framework/model`: DNN models for simulations.
@@ -33,6 +36,8 @@ This folder includes all modules required for a basic bit-wise CiM simulation.
 All you need to do is to modify the parameter settings `config.py` in the main folder.
 
 Then run `src_train.py` for model training and `src_simulation.py` for model evaluation and bit-wise simulation.
+
+### Module Introduction
 
 The **SimConv2d** and **SimLinear** module have three different operation mode: **Train**, **Inference**, and **Simulation**. You can specify the mode in the class instantiation.
 
