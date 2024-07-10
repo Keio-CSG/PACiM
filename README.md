@@ -47,6 +47,8 @@ In **Simulation** mode, the module will conduct bit-wise digital CiM simulation.
 
 ### 3.3. Parameter Introduction
 
+We add some parameters to commonly used PyTorch layers and create simulation layers. Below is an example of SimConv2d:
+
 ```
 SimConv2d(in_planes,                       # Same as nn.conv2d
           out_planes,                      # Same as nn.conv2d
