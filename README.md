@@ -65,17 +65,17 @@ SimConv2d(in_planes,                       # Same as nn.conv2d
 
 ## 4. PACiM
 
-### Abstract
+### 4.1. Abstract
 
 Approximate computing emerges as a promising approach to enhance the efficiency of compute-in-memory (CiM) systems in deep neural network processing. However, traditional approximate techniques often significantly trade off accuracy for power efficiency, and fail to reduce data transfer between main memory and CiM banks, which dominates power consumption. This paper introduces a novel Probabilistic Approximate Computation (PAC) method that leverages statistical techniques to approximate multiply-and-accumulation (MAC) operations, reducing approximation error by $4\times$ compared to existing approaches. PAC enables efficient sparsity-based computation in CiM systems by simplifying complex MAC vector computations into scalar calculations. Moreover, PAC enables sparsity encoding and eliminates the LSB activations transmission, significantly reducing data reads and writes. This sets PAC apart from traditional approximate computing techniques, minimizing not only computation power but also memory accesses by 50\%, thereby boosting system-level efficiency. We developed PACiM, a sparsity-centric architecture that fully exploits sparsity to reduce bit-serial cycles by 81\% and achieves a peak 8b/8b efficiency of 14.63 TOPS/W in 65 nm CMOS while maintaining high accuracy of 93.85/72.36/66.02\% on CIFAR-10/CIFAR-100/ImageNet benchmarks using a ResNet-18 model, demonstrating the effectiveness of our PAC methodology.
 
-### 4.1. PACiM Overview
+### 4.2. PACiM Overview
 
 The PACiM implementation is based on the Software_Simulation_Framework. We add more parameters to the **SimConv2d** and **SimLinear**, and construct the **PAConv2d** and **PALinear**.
 
 * `./PACiM/mac_noise_experiment`: MAC experiment to evaluate the RMSE of PAC.
 
-### 4.2. Parameter Introduction
+### 4.3. Parameter Introduction
 
 Upon Software_Simulation_Framework, some parameters for PAC computation are added to the layers. Below is an example of PAConv2d:
 
@@ -96,9 +96,9 @@ PAConv2d(in_planes,                         # Same as nn.conv2d
          device=cfg.device)                 # Running device selection: cuda or cpu or mps, etc.
 ```
 
-### 4.3. To reproduce the main results in the paper
+### 4.4. To reproduce the main results in the paper
 
-* We first pretrain the DNN model, then load the pretrained DNN model for noise-aware training. One example of training flow can be summarized as follows: pretrain -> noise-aware training w/ trim_noise = 25.0 -> noise-aware training w/ trim_noise = 50.0 -> noise-aware training w/ trim_noise = 75.0. Tuning the model that can tolerate maximum noise with minimum default accuracy loss. Specific training parameter settings can be found in the `config.py`.
+We first pretrain the DNN model, then load the pretrained DNN model for noise-aware training. One example of training flow can be summarized as follows: pretrain -> noise-aware training w/ trim_noise = 25.0 -> noise-aware training w/ trim_noise = 50.0 -> noise-aware training w/ trim_noise = 75.0. Tuning the model that can tolerate maximum noise with minimum default accuracy loss. Specific training parameter settings can be found in the `config.py`.
 
 ## Citation
 
