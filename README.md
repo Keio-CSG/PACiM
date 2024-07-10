@@ -8,7 +8,7 @@ Software Simulation Framework for "PACiM: A Sparsity-Centric Hybrid Compute-in-M
 
 ### Quick Usage
 
-You can use the SimConv2d/SimLinear in './Software_Simulation_Framework/module/module.py' in your own project for bit-wise simulation, and PAConv2d/PALinear in './PACiM/module/pac_module.py' for PAC simulation.
+You can use the SimConv2d/SimLinear in `./Software_Simulation_Framework/module/module.py` in your own project for bit-wise simulation, and PAConv2d/PALinear in `./PACiM/module/pac_module.py` for PAC simulation.
 
 ## 2. Environments
 
@@ -22,8 +22,20 @@ easydict==1.13
 
 ## 3. Software_Simulation_Framework
 
+This folder includes all modules required for a basic bit-wise CiM simulation.
+* `./Software_Simulation_Framework/bins`: Some useful scripts.
+* `./Software_Simulation_Framework/dataset`: Datasets for CiM benchmarks.
+* `./Software_Simulation_Framework/model`: DNN models for simulations.
+* `./Software_Simulation_Framework/tools`: Some useful tools.
+* `./Software_Simulation_Framework/module`: CONV/LINEAR modules for QAT/Noise-aware training/Bit-wise simulation.
+* `./Software_Simulation_Framework/main`: Main directory for model training and simulation.
+
+All you need to do is to modify the parameter settings `config.py` in the main folder.
+Then run `src_train.py` for model training and `src_simulation.py` for model evaluation and bit-wise simulation.
+
 ```
-python3 script\lisa_cora.py
+python3 ./Software_Simulation_Framework/main/src_train.py
+python3 ./Software_Simulation_Framework/main/src_simulation.py
 ```
 
 ## 4. PACiM
