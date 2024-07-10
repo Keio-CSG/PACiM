@@ -73,7 +73,32 @@ Approximate computing emerges as a promising approach to enhance the efficiency 
 
 The PACiM implementation is based on the Software_Simulation_Framework. We add more parameters to the **SimConv2d** and **SimLinear**, and construct the **PAConv2d** and **PALinear**.
 
-### 4.2. 
+* `./PACiM/mac_noise_experiment`: MAC experiment to evaluate the RMSE of PAC.
+
+### 4.2. Parameter Introduction
+
+Upon Software_Simulation_Framework, some parameters for PAC computation are added to the layers. Below is an example of PAConv2d:
+
+```
+PAConv2d(in_planes,                         # Same as nn.conv2d
+         out_planes,                        # Same as nn.conv2d
+         kernel_size=3,                     # Same as nn.conv2d
+         stride=stride,                     # Same as nn.conv2d
+         padding=1,                         # Same as nn.conv2d
+         bias=False,                        # Same as nn.conv2d
+         wbit=cfg.wbit_paconv,              # Weight quantization bit-width
+         xbit=cfg.xbit_paconv,              # Activation quantization bit-width
+         operand=cfg.operand_paconv,        # PAC operand
+         dynamic_config=cfg.dynamic_config, # Enable dynamic configuration or not
+         threshold=cfg.threshold,           # Threshold for dynamic configuration
+         mode=cfg.mode_paconv,              # Mode selection: Train or Inference or Simulation
+         trim_noise=cfg.trim_noise_paconv,  # Noise intensity applied to output activations  
+         device=cfg.device)                 # Running device selection: cuda or cpu or mps, etc.
+```
+
+### 4.3. To reproduce the main results in the paper
+
+* We first pretrain the DNN model, then load the pretrained DNN model for noise-aware training. One example of training flow can be summarized as follows: pretrain -> noise-aware training w/ trim_noise = 25.0 -> noise-aware training w/ trim_noise = 50.0 -> noise-aware training w/ trim_noise = 75.0. Tuning the model that can tolerate maximum noise with minimum default accuracy loss. Specific training parameter settings can be found in the `config.py`.
 
 ## Citation
 
