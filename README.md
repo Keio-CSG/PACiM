@@ -31,9 +31,9 @@ This folder includes all modules required for a basic bit-wise CiM simulation.
 * `./Software_Simulation_Framework/module`: CONV/LINEAR modules for QAT/Noise-aware training/Bit-wise simulation.
 * `./Software_Simulation_Framework/main`: Main directory for model training and simulation.
 
-All you need to do is to modify the parameter/argument settings `config.py` in the main folder.
+All you need to do is to modify the parameter/argument settings `config.py` in the main folder. Then run `src_train.py` for model training and `src_simulation.py` for model evaluation and bit-wise simulation.
 
-Then run `src_train.py` for model training and `src_simulation.py` for model evaluation and bit-wise simulation.
+When you run `src_train.py`, the training log and model weight will be generated in `main/run`.
 
 ### 3.2. Module Introduction
 
