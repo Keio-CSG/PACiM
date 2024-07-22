@@ -7,7 +7,7 @@ VGG models for PACiM.
 import torch
 import torch.nn as nn
 from main.config import cfg
-from module.pac_module import QuantConv2d, PAConv2d, PALinear
+from module.pac_module import QuantConv2d, PAConv2d, PALinear, PACT
 
 
 def paconv(in_planes, out_planes, stride=1):
@@ -51,6 +51,12 @@ def qconv(in_planes, out_planes):
                        xbit=cfg.xbit_qconv,
                        mode=cfg.mode_qconv,
                        device=cfg.device)
+
+
+if cfg.PACT:
+    relu = PACT()
+else:
+    relu = nn.ReLU(inplace=True)
 
 
 class VGG(nn.Module):
@@ -117,9 +123,9 @@ def make_layers(str, batch_norm=False):
         else:
             conv2d = paconv(in_channels, v)
             if batch_norm:
-                layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=True)]
+                layers += [conv2d, nn.BatchNorm2d(v), relu]
             else:
-                layers += [conv2d, nn.ReLU(inplace=True)]
+                layers += [conv2d, relu]
             in_channels = v
     return nn.Sequential(*layers)
 
