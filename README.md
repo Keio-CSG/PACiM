@@ -100,7 +100,7 @@ PAConv2d(in_planes,                         # Same as nn.conv2d
 
 We first pretrain the DNN model, then load the pretrained DNN model for noise-aware training. One example of training flow can be summarized as follows: pretrain -> noise-aware training w/ trim_noise = 25.0 -> noise-aware training w/ trim_noise = 50.0 -> noise-aware training w/ trim_noise = 75.0. Tuning the model that can tolerate maximum noise with minimum default accuracy loss. Specific training parameter settings can be found in the `config.py`.
 
-We also provide the model weights of ResNet-18 on CIFAR-100 after noise-aware training for reference: [Dropbox]([https://github.com](https://www.dropbox.com/scl/fi/ihl11tb7abqlolv6cdicg/resnet18_cifar100_w8x8_noise75_pact.pkl?rlkey=ejvohik9bbjss8jj78fwdwiz9&st=ywrg2gx8&dl=0))
+We also provide the model weights of ResNet-18 on CIFAR-100 after noise-aware training for reference: <a href="[https://www.example.com](https://github.com](https://www.dropbox.com/scl/fi/ihl11tb7abqlolv6cdicg/resnet18_cifar100_w8x8_noise75_pact.pkl?rlkey=ejvohik9bbjss8jj78fwdwiz9&st=ywrg2gx8&dl=0)" target="_blank">Dropbox</a>
 
 ## Citation
 
