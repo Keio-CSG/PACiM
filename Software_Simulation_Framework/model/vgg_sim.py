@@ -7,7 +7,7 @@ VGG models for the simulation framework.
 import torch
 import torch.nn as nn
 from main.config import cfg
-from module.module import SimConv2d, SimLinear
+from module.module import SimConv2d, SimLinear, PACT
 
 
 def conv(in_planes, out_planes, stride=1):
@@ -33,6 +33,12 @@ def affine(in_features, out_features):
                      mode=cfg.mode_linear,
                      trim_noise=cfg.trim_noise_linear,
                      device=cfg.device)
+
+
+if cfg.PACT:
+    relu = PACT()
+else:
+    relu = nn.ReLU(inplace=True)
 
 
 class VGG(nn.Module):
@@ -117,9 +123,9 @@ def make_layers(str, batch_norm=False):
         else:
             conv2d = conv(in_channels, v)
             if batch_norm:
-                layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=True)]
+                layers += [conv2d, nn.BatchNorm2d(v), relu]
             else:
-                layers += [conv2d, nn.ReLU(inplace=True)]
+                layers += [conv2d, relu]
             in_channels = v
     return nn.Sequential(*layers)
 

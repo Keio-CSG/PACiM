@@ -5,7 +5,7 @@ ResNet models for the simulation framework.
 """
 
 import torch.nn as nn
-from module.module import SimConv2d, SimLinear
+from module.module import SimConv2d, SimLinear, PACT
 from main.config import cfg
 import torch
 import time
@@ -58,11 +58,14 @@ class BasicBlock(nn.Module):
         super(BasicBlock, self).__init__()
         self.conv1 = conv3x3(inplanes, planes, stride)
         self.bn1 = nn.BatchNorm2d(planes)
-        self.relu = nn.ReLU(inplace=True)
         self.conv2 = conv3x3(planes, planes)
         self.bn2 = nn.BatchNorm2d(planes)
         self.downsample = downsample
         self.stride = stride
+        if cfg.PACT:
+            self.relu = PACT()
+        else:
+            self.relu = nn.ReLU(inplace=True)
 
     def forward(self, x):
         identity = x
@@ -94,9 +97,12 @@ class Bottleneck(nn.Module):
         self.bn2 = nn.BatchNorm2d(planes)
         self.conv3 = conv1x1(planes, planes * self.expansion)
         self.bn3 = nn.BatchNorm2d(planes * self.expansion)
-        self.relu = nn.ReLU(inplace=True)
         self.downsample = downsample
         self.stride = stride
+        if cfg.PACT:
+            self.relu = PACT()
+        else:
+            self.relu = nn.ReLU(inplace=True)
 
     def forward(self, x):
         identity = x
@@ -149,7 +155,6 @@ class ResNet(nn.Module):
                                trim_noise=cfg.trim_noise_conv,
                                device=cfg.device)
         self.bn1 = nn.BatchNorm2d(64)
-        self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.layer1 = self._make_layer(block, 64, layers[0])
         self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
@@ -157,6 +162,10 @@ class ResNet(nn.Module):
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = affine(512 * block.expansion, num_classes)
+        if cfg.PACT:
+            self.relu = PACT()
+        else:
+            self.relu = nn.ReLU(inplace=True)
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
