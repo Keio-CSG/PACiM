@@ -92,6 +92,41 @@ class Clamp(torch.autograd.Function):
         return grad_input, None, None
 
 
+class PACTFunction(torch.autograd.Function):
+    """
+    Gradient computation function for PACT.
+    """
+    @staticmethod
+    def forward(ctx, input, alpha):
+        ctx.save_for_backward(input, alpha)
+        return torch.clamp(input, min=0, max=alpha.item())
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        input, alpha = ctx.saved_tensors
+        grad_input = grad_output.clone()
+        grad_alpha = grad_output.clone()
+
+        grad_input[input < 0] = 0
+        grad_input[input > alpha] = 0
+
+        grad_alpha = grad_alpha * ((input > alpha).float())
+
+        return grad_input, grad_alpha.sum()
+
+
+class PACT(nn.Module):
+    """
+    PACT ReLU Function
+    """
+    def __init__(self, alpha=6.0):
+        super(PACT, self).__init__()
+        self.alpha = nn.Parameter(torch.tensor(alpha))
+
+    def forward(self, x):
+        return PACTFunction.apply(x, self.alpha)
+
+
 class QuantConv2d(nn.Conv2d):
     """
     UINT Quantized Conv2d Module.
