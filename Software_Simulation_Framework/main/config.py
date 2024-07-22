@@ -35,11 +35,11 @@ cfg.model_name = 'ResNet-18'
 
 # <|Specify the input image size|>
 # CIFAR-10, CIFAR-100
-input_size = 28
-crop_size = 32
+origin_size = 32
+input_size = 32
 # ImageNet
+# origin_size = 256
 # input_size = 224
-# crop_size = 256
 
 # <|Specify the running device: 'cpu', 'cuda', 'mps', etc.|>
 cfg.device = 'cuda'
@@ -58,6 +58,9 @@ cfg.mode_linear = 'Train' # Mode: Train/Inference/Simulation
 cfg.wbit_linear = 8 # Weight bit
 cfg.xbit_linear = 8 # Activation bit
 cfg.trim_noise_linear = 0.0 # Noise intensity for noise-aware training
+
+# <|Specify using PACT or ReLU|>
+cfg.PACT = True
 
 # <|Specify the directory for training/validation/test(simulation) dataset|>
 # CIFAR-10
@@ -129,8 +132,8 @@ cfg.transforms_train = transforms.Compose([
             transforms.ColorJitter(hue=0.3)
         ]
     ),
-    transforms.Resize(crop_size),  # Shorter edge = 256
-    transforms.CenterCrop(crop_size),
+    transforms.Resize((origin_size, origin_size)),
+    transforms.CenterCrop(origin_size),
     transforms.RandomCrop(input_size, padding=4),
     transforms.RandomHorizontalFlip(),
     transforms.RandomRotation(15),
@@ -139,13 +142,13 @@ cfg.transforms_train = transforms.Compose([
 ])
 
 cfg.transforms_valid = transforms.Compose([
-    transforms.Resize(input_size),
+    transforms.Resize((input_size, input_size)),
     transforms.ToTensor(),
     transforms.Normalize(norm_mean, norm_std)
 ])
 
 cfg.transforms_test = transforms.Compose([
-    transforms.Resize(input_size),
+    transforms.Resize((input_size, input_size)),
     transforms.ToTensor(),
     transforms.Normalize(norm_mean, norm_std)
 ])
