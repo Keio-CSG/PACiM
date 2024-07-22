@@ -45,7 +45,7 @@ In **Inference** mode, the CONV/LINEAR layers compute output activations with UI
 
 In **Simulation** mode, the module will conduct bit-wise digital CiM simulation. You can modify or overwrite the `_sim_calc()` in the modules to customize and verify your all computing method.
 
-### 3.3. Parameter Introduction
+### 3.3. Argument Introduction
 
 We add some arguments to commonly used PyTorch layers and create simulation layers. Below is an example of SimConv2d:
 
@@ -75,7 +75,7 @@ The PACiM implementation is based on the Software_Simulation_Framework. We add m
 
 * `./PACiM/mac_noise_experiment`: MAC experiment to evaluate the RMSE of PAC.
 
-### 4.3. Parameter Introduction
+### 4.3. Argument Introduction
 
 Upon Software_Simulation_Framework, some arguments for PAC computation are added to the layers. Below is an example of PAConv2d:
 
@@ -99,6 +99,8 @@ PAConv2d(in_planes,                         # Same as nn.conv2d
 ### 4.4. To reproduce the main results in the paper
 
 We first pretrain the DNN model, then load the pretrained DNN model for noise-aware training. One example of training flow can be summarized as follows: pretrain -> noise-aware training w/ trim_noise = 25.0 -> noise-aware training w/ trim_noise = 50.0 -> noise-aware training w/ trim_noise = 75.0. Tuning the model that can tolerate maximum noise with minimum default accuracy loss. Specific training parameter settings can be found in the `config.py`.
+
+We also provide the model weights of ResNet-18 on CIFAR-100 after noise-aware training for reference: [Dropbox]([https://github.com](https://www.dropbox.com/scl/fi/ihl11tb7abqlolv6cdicg/resnet18_cifar100_w8x8_noise75_pact.pkl?rlkey=ejvohik9bbjss8jj78fwdwiz9&st=ywrg2gx8&dl=0))
 
 ## Citation
 
