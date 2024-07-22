@@ -86,7 +86,7 @@ cfg.test_dir = r'E:\Machine_Learning\Dataset\Processing\Cifar100\test_images'
 # cfg.test_dir = r'E:\Machine_Learning\Dataset\Processing\ImageNet\imagenet-object-localization-challenge\ILSVRC\Data\CLS-LOC\valid'
 
 # <|Specify the pretrained model for noise-aware training or test (simulation)|>
-# cfg.pretrain_model_path = None  # For training, give a None.
+cfg.pretrain_model_path = None  # For training, give a None.
 # cfg.pretrain_model_path = r'E:\Machine_Learning\Project\PACiM\main\run\24-07-10_20-06\checkpoint_best.pkl'
 
 # <|Specify the batch size and workers for training|>
