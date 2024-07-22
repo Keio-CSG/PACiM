@@ -35,11 +35,11 @@ cfg.model_name = 'ResNet-18'
 
 # <|Specify the input image size|>
 # CIFAR-10, CIFAR-100
-input_size = 28
-crop_size = 32
+origin_size = 32
+input_size = 32
 # ImageNet
+# origin_size = 256
 # input_size = 224
-# crop_size = 256
 
 # <|Specify the running device: 'cpu', 'cuda', 'mps', etc.|>
 cfg.device = 'cuda'
@@ -68,6 +68,9 @@ cfg.mode_qconv = 'Train' # Mode: Train/Inference
 cfg.wbit_qconv = 8 # Weight bit
 cfg.xbit_qconv = 8 # Activation bit
 
+# <|Specify using PACT or ReLU|>
+cfg.PACT = True
+
 # <|Specify the directory for training/validation/test(simulation) dataset|>
 # CIFAR-10
 # cfg.train_dir = r'E:\Machine_Learning\Dataset\Processing\Cifar10\archive\cifar10\train'
@@ -83,7 +86,7 @@ cfg.test_dir = r'E:\Machine_Learning\Dataset\Processing\Cifar100\test_images'
 # cfg.test_dir = r'E:\Machine_Learning\Dataset\Processing\ImageNet\imagenet-object-localization-challenge\ILSVRC\Data\CLS-LOC\valid'
 
 # <|Specify the pretrained model for noise-aware training or test (simulation)|>
-cfg.pretrain_model_path = None  # For training, give a None.
+# cfg.pretrain_model_path = None  # For training, give a None.
 # cfg.pretrain_model_path = r'E:\Machine_Learning\Project\PACiM\main\run\24-07-10_20-06\checkpoint_best.pkl'
 
 # <|Specify the batch size and workers for training|>
@@ -138,8 +141,8 @@ cfg.transforms_train = transforms.Compose([
             transforms.ColorJitter(hue=0.3)
         ]
     ),
-    transforms.Resize(crop_size),  # Shorter edge = 256
-    transforms.CenterCrop(crop_size),
+    transforms.Resize((origin_size, origin_size)),
+    transforms.CenterCrop(origin_size),
     transforms.RandomCrop(input_size, padding=4),
     transforms.RandomHorizontalFlip(),
     transforms.RandomRotation(15),
@@ -148,13 +151,13 @@ cfg.transforms_train = transforms.Compose([
 ])
 
 cfg.transforms_valid = transforms.Compose([
-    transforms.Resize(input_size),
+    transforms.Resize((input_size, input_size)),
     transforms.ToTensor(),
     transforms.Normalize(norm_mean, norm_std)
 ])
 
 cfg.transforms_test = transforms.Compose([
-    transforms.Resize(input_size),
+    transforms.Resize((input_size, input_size)),
     transforms.ToTensor(),
     transforms.Normalize(norm_mean, norm_std)
 ])
